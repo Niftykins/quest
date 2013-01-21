@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="jaws.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="quest.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="astar.js"></script>
+	<script src="graph.js"></script>
+
+	<title>questicles</title>
+
+	<style>
+  	#kek {
+	    position: absolute;
+	    /*border: solid 2px #000;*/
+	    left: 50%;
+	    top: 50%; 
+	    margin-left: -416px;
+	    margin-top: -256px;
+	    background-color: white;
+	}
+	span { color: white; }
+	body { background-color: black; }
+	</style>
+</head>
+<body>
+	<canvas id="kek" width=832 height=512></canvas>
+	<span id="fps"></span>
+	<span id="tick"></span>
+	<span id="speed"></span>
+	<span id="speed2"></span>
+	<span id="mouse"></span>
+
+	<script>
+		var socket = io.connect();
+	</script>
+
+</body>
+</html>
