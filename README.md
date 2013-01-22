@@ -76,5 +76,105 @@ Client
 [audio.js](https://github.com/browserquest/BrowserQuest/blob/master/client/js/audio.js)
 --------
 
-game.js
--------
+[bubble.js](https://github.com/browserquest/BrowserQuest/blob/master/client/js/bubble.js)
+---------
+    Bubble {
+        init: { }
+        isOver: { }
+        destroy: { }
+        reset: { }
+    }
+    BubbleManager {
+        init: { }
+        getBubbleById: { }
+        create: { this.bubbles[id].reset(time); this.bubbles[id] = new Bubble(...); }
+        update: { bubble.destroy(); }
+        clean: { bubble.destroy(); }
+        destroyBubble: { var bubble = this.getBubbleById(id); bubble.destroy(); }
+        forEachBubble: { }
+    }
+    
+[camera.js](https://github.com/browserquest/BrowserQuest/blob/master/client/js/camera.js)
+--------
+[Renderer](https://github.com/Niftykins/quest/edit/master/README.md#rendererjs)
+
+    init: function(renderer) { this.renderer = renderer; this.rescale(); }
+    rescale: { this.renderer.mobile }
+    setPosition: { }
+    setGridPosition: { }
+    lookAt: { this.renderer.tilesize; this.setPosition(x,y); }
+    forEachVisiblePosition: { }
+    isVisible: { return this.VisibilePosition(...) }
+    isVisiblePosition: { }
+    focusEntity: { this.setGridPosition(x,y) }
+    
+[character.js](https://github.com/browserquest/BrowserQuest/blob/master/client/js/character.js)
+------------
+[Entity](https://github.com/Niftykins/quest/edit/master/README.md#entityjs)
+[Transition](https://github.com/Niftykins/quest/edit/master/README.md#transitions)
+
+    extendeds Entity
+    init: { this._super(...}; this.movement = new Transition(); }
+    clean: { this.forEachAttacker(...) }
+    setMaxHitPoints: { }
+    setDefaultAnimation: { this.idle() }
+    hasWeapon: { }
+    hasShadow: { }
+    animate: { this.setAnimation(...) }
+    turnTo: { this.idle() }
+    setOrientation: { }
+    idle: { this.setOrientation(orientation); this.animate("idle", this.idleSpeed) }
+    hit: { this.setOrientation(orient); this.animate("atk", this.atkSpeed,1) }
+    walk: { this.setOrient(orient); this.animate("walk", this.walkSpeed) }
+    moveTo_: { if(this.isMoving()) this.continueTo(x,y); else { var path = this.requestPathfindingTo(x,y); this.followPath(path) }
+    requestPathfindingTo: { }
+    onRequestPath: { }
+    onStartPathing: { }
+    onStopPathing: { }
+    followPath: { this.nextStep() }
+    continueTo: { }
+    updateMovement: { this.Walk(l/r/u/d) }
+    updatePositionOnGrid: { this.setGridPositon(...) }
+    nextStep: {
+        if(this.isMoving()) {
+            this.updatePositionOnGrid(); this.checkAggro();
+        } else { 
+            if(this.hasNextStep()) {
+                .. if(this.hasChangedItsPath()) {
+                    path = this.requestPathfindingTo(x,y); this.followPath(path);
+                } else if(this.hasNextStep()) { this.updateMovement(); }
+            }
+        } if(stop) this.idle();
+    }
+    onBeforeStep: { }
+    onStep: { }
+    isMoving: { }
+    hasNextStep: { }
+    hasChangedItsPath: { }
+    isNear: { }
+    onAggro: { }
+    onCheckAggro: { }
+    aggro: { }
+    onDeath: { }
+    lookAtTarget: { this.turnTo(this.getOrientationTo(this.target)) }
+    go: { if(this.isAttacking()) this.disengage();      this.moveTo(x,y) }
+    follow: { this.moveTo_(...) }
+    stop: { if(this.isMoving()) }
+    engage: { this.setTarget(char); this.follow(char); }
+    disengage: { this.removeTarget(); }
+    isAttacking: { }
+    getOrientationTo: { }
+    isAttackedBy: { }
+    addAttacker: 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
