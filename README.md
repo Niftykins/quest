@@ -241,6 +241,8 @@ Client
 [Bubble](https://github.com/Niftykins/quest/edit/master/README.md#bubblejs)
 [Renderer](https://github.com/Niftykins/quest/edit/master/README.md#rendererjs)
 [Map](https://github.com/Niftykins/quest/edit/master/README.md#mapjs)
+[Sprite](https://github.com/Niftykins/quest/edit/master/README.md#spritejs)
+[Camera](https://github.com/Niftykins/quest/edit/master/README.md#camerajs)
 
     init: { this.player = new Warrior("player", ""); this.infoManager = new InfoManager(this); }
     setup: { this.setBubbleManager(new BubbleManager(...)); this.setRenderer(new Renderer(...)); this.setChatInput(input); }
@@ -250,8 +252,35 @@ Client
     setPathfinder: { }
     setChatInput: { }
     setBubbleManager: { }
-    loadMap: { this.map = new Map(!this.r.upscaledRendering, this);
-    
+    loadMap: { this.map = new Map(!this.r.upscaledRendering, this); this.map.ready(function() {
+        var tilesetIndex = self.renderer.upscaledRendering ...; self.r.setTileset(self.map.tilesets[...])}); }
+    initPlayer: { if(this.stor.hasAlrPlayed()+this.stor.data.player) {
+        if(this.storage.data.player.armor/weapon) { this.p.setSpriteName(this.s.d.p.a); this.setWeaponName(this.s.d.p.w); } } }
+    initShadows: { }
+    initCursors: { }
+    initAnimations: { this.targetAnimations = new Animation(...); this.tarAnims.setSpeed(50);
+        this.sparksAnim = new Anim(...); this.sparksAnim.setSpeed(120); }
+    initHurtSprites: { Types.forEachArmorKind( self.sprites[...].createHurtSprite()) }
+    initSilhouettes: { Types.forEachMobOrNpcKind( self.sprites[...].createSilhouette(); self.sprites[chest/cake].createSil(); }
+    initAchievements: { this.app.initAchievements(this.ach); if(this.s.alredPlay) this.app.initUnlockedAch(this.s.d.ach.unlocked }
+    getAchievementsById: { }
+    loadSprite: { if(this.r.unscaledRenderering) new Sprite(...) }
+    setSpriteScale: { if(this.r.upscaledRendering) ... else entity.setSprite(...); this.initHurtSprites(); this.initShadows(); this.initCursors(); }
+    loadSprites: { }
+    spritesLoaded: { }
+    setCursor: { }
+    updateCursorLogic: { }
+    focusPlayer: { this.r.camera.lookAt(this.player) }
+    addEntity: { this.registerEntityPosition(e); entity.fadeIn(time) }
+    removeEntity: { this.unregisterEntityPosition(e) }
+    addItem:{ item.setSprite(item.getSpriteName()); item.setGridPosition(xy), item.setAnimation(); this.addEntity(item); }
+    removeItem: { this.removeFromItemGrid(...); this.removeFromRenderingGrid(...); }
+    initPathingGrid: { this.map.w/h }
+    initEntityGrid: { this.map.w/h }
+    initRenderingGrid: { this.map.w/h }
+    initItemGrid: { this.map.w/h }
+    initAnimatedTiles: { this.forEachVisibileTile; this.map.isAnimatedTile(id); var tile = new AnimatedTile(id, map.getTileAnimationLength, m.getTileAnimationDelay), pos = self.map.tileIndexToGridPosition(..); self.animatedTiles.push(tile);
+    526
     
     
     
