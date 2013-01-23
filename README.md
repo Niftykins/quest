@@ -243,6 +243,10 @@ Client
 [Map](https://github.com/Niftykins/quest/edit/master/README.md#mapjs)
 [Sprite](https://github.com/Niftykins/quest/edit/master/README.md#spritejs)
 [Camera](https://github.com/Niftykins/quest/edit/master/README.md#camerajs)
+[Audio](https://github.com/Niftykins/quest/edit/master/README.md#audiojs)
+[Updater](https://github.com/Niftykins/quest/edit/master/README.md#updaterjs)
+[Pathfinder](https://github.com/Niftykins/quest/edit/master/README.md#pathfinderjs)
+[GameClient](https://github.com/Niftykins/quest/edit/master/README.md#gameclientjs)
 
     init: { this.player = new Warrior("player", ""); this.infoManager = new InfoManager(this); }
     setup: { this.setBubbleManager(new BubbleManager(...)); this.setRenderer(new Renderer(...)); this.setChatInput(input); }
@@ -280,8 +284,57 @@ Client
     initRenderingGrid: { this.map.w/h }
     initItemGrid: { this.map.w/h }
     initAnimatedTiles: { this.forEachVisibileTile; this.map.isAnimatedTile(id); var tile = new AnimatedTile(id, map.getTileAnimationLength, m.getTileAnimationDelay), pos = self.map.tileIndexToGridPosition(..); self.animatedTiles.push(tile);
-    526
-    
+    addToRenderingGrid: { if(!this.map.isOutOfBounds(xy) }
+    removeFromRenderingGrid: { }
+    removeFromEntityGrid: { }
+    removeFromItemGrid: { }
+    removeFromPathingGrid: { }
+    registerEntityDualPosition: { this.addToRenderingGrid(..) }
+    unregisterEntityPosition: { this.removeFromEntityGrid(...) }
+    registerEntityPosition: { this.addToRenderingGrid(...) } 
+    setServerOptions: { }
+    loadAudio: { this.audioManager = new AudioManager(this) }
+    initMusicAreas: { this.map.musicAreas; self.audioManager.addArea(...) }
+    run: {
+        this.loadSprites();
+        this.setUpdater(new Updater(this));
+        this.camera = this.renderer.camera;
+        this.setSpriteScale(this.renderer.scale);
+        
+        if(self.map.isLoaded + self.spritesLoaded()) {
+            self.loadAudio();
+            self.initMusicAreas();
+            self.initAchievements();
+            self.initCursors();
+            self.initAnimations();
+            self.initShadows();
+            self.initHurtSprites();
+            self.initSilhouettes();
+            self.initEntityGrid();
+            self.initItemGrid();
+            self.initPathingGrid();
+            self.initRenderingGrid();
+            self.setPathfinder(new Pathfinder(...));
+            self.initPlayer();
+            self.setCursor("hand");
+            self.connect(..);
+        }
+    }
+    tick: { this.updateCursorLogic(); this.updater.update(); this.renderer.renderFrame(); requestAnimFrame(...); }
+    start: { this.tick(); }
+    stop: { }
+    entityIdExists: { }
+    getEntityById: { }
+    connect: { this.client = new GameClient(...); this.app.config.~; this.client.connect(..); 
+        self.player.name; self.sendHello(..); self.removeObsoleteEntities(); self.client.sendWho(..);
+        self.player.name; s.p.setGridPosition(xy); s.p.setMaxHitPoints(hp); self.updateBars();
+        self.resetCamera(); self.updatePlateuMode(); self.audioManger.updateMusic(); self.addEntity(..);
+        self.player.dirtyRect = s.r.getEntityBoundingRect(..); self.tryUnlockingAchi(..);
+        self.storage.hasAlreadyPlayed(); self.storage.initPlayer(..); self.s.savePlayer(
+            s.r.getPlayerImage(); s.p.getSpriteName(); self.getWeaponName() );
+        self.showNotification(..); self.s.setPlayerName(name);
+        
+    self.player.isMovingToLoot(); self.player.isAttacking(); 812
     
     
     
