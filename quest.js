@@ -84,17 +84,10 @@ function lolQuest() {
 		if(player.is_moving && path.length != 0 && $.now()-player.time>200) {
 			go_to = path.shift()
 			moveDirection(player.grid, go_to, player);
+
 			player.time = $.now();
 		}
-
-		player.flipped = 0; sword.flipped = 0;
-		switch(player.action) {
-			case "walk_right": player.action = "idle_right"; break;
-			case "walk_left": player.action = "idle_left"; player.flipped = 1; break;
-			case "walk_up": player.action = "idle_up"; break;
-			case "walk_down": player.action = "idle_down"; sword.flipped = 0; break;
-		}
-
+		
 		//ifs
 		sword.action = player.action;
 		sword.flipped = player.flipped;
@@ -104,6 +97,11 @@ function lolQuest() {
 			sword.setImage(sword[sword.action].next());
 		} catch(e) {};
 
+		switch(player.action) {
+			case "walk_right": player.action = "idle_right"; break;
+			case "walk_up": player.action = "idle_up"; player.flipped = 0; break;
+			case "walk_down": player.action = "idle_down"; player.flipped = 0; break;
+		}
 	} //end of update
 
 	this.draw = function () {
@@ -161,17 +159,11 @@ function lolQuest() {
 
 	function moveDirection(from, to, sprite) {
 		var fx = from[0], fy = from[1],	tx = to.x, ty = to.y;
-		//console.log(fx, fy)
-		//console.log(tx, ty)
-
-		//sprite.x = tx * tile_size + 16;
-		//sprite.y = ty * tile_size + 9;
-		//sprite.grid = [tx, ty];
 		
-		if(fx < tx)		 { sprite.move(32,0); sprite.action = "walk_right"; }
-		else if(fx > tx) { sprite.move(-32,0); sprite.action = "walk_left"; }
-		else if(fy > ty) { sprite.move(0,-32); sprite.action = "walk_up"; }
-		else if(fy < ty) { sprite.move(0,32); sprite.action = "walk_down"; }
+		if(fx < tx)		 return "right";
+		else if(fx > tx) return "left";
+		else if(fy > ty) return "up";
+		else if(fy < ty) return "down";
 	}
 
 } // end of lolQuest
@@ -182,4 +174,30 @@ this.moveSpeed = 120;
 this.walkSpeed = 100;
 this.idleSpeed = 450;
 this.setAttackRate(800);
+
+
+
+
+if(jaws.pressed("left") || jaws.pressed("a"))  {
+			player.move(-move,0); sword.move(-move,0);
+			player.action = "walk_right";
+			player.flipped = sword.flipped = 1;
+		} else if(jaws.pressed("right") || jaws.pressed("d")) { 
+			player.move(move,0); sword.move(move,0);
+			player.action = "walk_right";
+			player.flipped = sword.flipped = 0;
+		} else if(jaws.pressed("up") || jaws.pressed("w")) {
+			player.move(0, -move); sword.move(0,-move);
+			player.action = "walk_up";
+			player.flipped = sword.flipped = 0;
+		} else if(jaws.pressed("down") || jaws.pressed("s")) {
+			player.move(0, move); sword.move(0,move);
+			player.action = "walk_down";
+			player.flipped = sword.flipped = 0;
+		}
+
+		if(fx < tx)		 { sprite.move(32,0); sprite.action = "walk_right"; player.flipped = 0;}
+		else if(fx > tx) { sprite.move(-32,0); sprite.action = "walk_right"; sprite.flipped = 1;	}
+		else if(fy > ty) { sprite.move(0,-32); sprite.action = "walk_up"; }
+		else if(fy < ty) { sprite.move(0,32); sprite.action = "walk_down"; }
 */
